@@ -1,4 +1,4 @@
-# Sentiment and Emotion Analysis
+# Sentiment and Emotion Analysis with IBM Watson Natural Language Understanding
 Using IBM Watson Natural Language Understanding to perform sentiment and emotion analysis 
 
 Currently contains an example script illustrating how to use IBM Watson's Natural Language Understanding to perform sentiment and emotion analysis. This example script assumes that the items to be analyzed are "posts," e.g. free text posts made by users on some platform. 
