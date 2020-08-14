@@ -85,7 +85,7 @@ def upsert_thread_html():
             threads_id = row[0]
             url = row[1]
             errored.append(['Threads html extraction: ', 'thread id', threads_id, 'at', url, ':', e])
-            print('Could not get HTML from thread ', threads_id, 'found at', url, ':', e)
+            print('Could not get HTML from thread id', threads_id, 'found at', url, ':', e)
         conn.commit()
 
 
@@ -94,5 +94,5 @@ print('Your thread extraction is beginning...')
 upsert_thread_info()
 print('Your html extraction for each thread is beginning...')
 upsert_thread_html()
-print('Your thread exctraction is complete. The following have failed:', errored)
+print('Your thread exctraction is complete. Errors:', errored)
 
