@@ -90,7 +90,7 @@ def upsert_thread_html():
 
 
 insert_search_term()
-print('Your thread extraction is beginning...')
+print('Your thread extraction has begun...')
 upsert_thread_info()
 print('Your html extraction for each thread is beginning...')
 upsert_thread_html()
