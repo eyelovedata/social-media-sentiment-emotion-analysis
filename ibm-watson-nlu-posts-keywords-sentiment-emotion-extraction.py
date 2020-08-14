@@ -103,6 +103,6 @@ for row in rows:
             logging.warning(f'Error inserting keyword scores for keyword name {keyword["text"]} from post id {posts_id}: {e}')
             continue
     cur.execute('UPDATE posts SET marker=1 WHERE id = ?', (posts_id,))
+    conn.commit()
 
 logging.info('Sentiment analysis complete.')
-conn.commit()
