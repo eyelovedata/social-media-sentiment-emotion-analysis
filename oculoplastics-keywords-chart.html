@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    g.arc path {
+      stroke: #828282;
+      stroke-width: 0.5;
+    }
+    g.arc text {
+      font-size: 10px;
+    }
+    .copyright-btn {
+      margin-top: 15px; 
+      margin-left: 15px; 
+      font-family: Trebuchet MS, sans-serif; 
+      font-size: 1.25vw; 
+      border-color: #dae0e5
+    }
+    .title {
+      font-family: Trebuchet MS, sans-serif; 
+      font-weight: bold;
+    }
+    .content {
+      font-family: Trebuchet MS, sans-serif; 
+      font-size: 0.8em;
+      margin-left: 15px;
+    }
+    .isc-btn {
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button type="button" class="copyright-btn btn btn-light isc-btn" data-toggle="modal" data-target="#exampleModal">
+    ISC
+  </button>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">ISC</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="title">
+            Copyright 2018–2020 Observable, Inc.
+          </div>
+          <div class="content">
+            <br>
+            Permission to use, copy, modify, and/or distribute this software for any
+            purpose with or without fee is hereby granted, provided that the above
+            copyright notice and this permission notice appear in all copies.
+          <br><br>
+            THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+            WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+            MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+            ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+            WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+            ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+            OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="container"></div>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script>
+
+    const data = {
+      name: "",
+      children: [{"name":1,"children":[{"name":11,"children":[{"emotionType":"Sadness","emotionScore":0.414561277,"sentScore":-0.536980169,"name":"face","value":5059},{"emotionType":"Sadness","emotionScore":0.449698752,"sentScore":-0.524985047,"name":"head","value":4192},{"emotionType":"Sadness","emotionScore":0.419125203,"sentScore":-0.425410292,"name":"hair","value":2687},{"emotionType":"Sadness","emotionScore":0.336988066,"sentScore":-0.579742475,"name":"nose","value":2152},{"emotionType":"Sadness","emotionScore":0.411000032,"sentScore":-0.586098594,"name":"ear","value":2101},{"emotionType":"Sadness","emotionScore":0.354888768,"sentScore":-0.475769825,"name":"brain","value":1713},{"emotionType":"Sadness","emotionScore":0.413558736,"sentScore":-0.602497028,"name":"forehead","value":1339},{"emotionType":"Sadness","emotionScore":0.392906357,"sentScore":-0.473136183,"name":"cheek","value":1308},{"emotionType":"Sadness","emotionScore":0.381664491,"sentScore":-0.508853214,"name":"lip","value":1292},{"emotionType":"Sadness","emotionScore":0.386157206,"sentScore":-0.504598051,"name":"mouth","value":1255},{"emotionType":"Fear","emotionScore":0.378508757,"sentScore":-0.568542132,"name":"sinus","value":951},{"emotionType":"Sadness","emotionScore":0.388409673,"sentScore":-0.576196092,"name":"scalp","value":888},{"emotionType":"Sadness","emotionScore":0.723970952,"sentScore":-0.612241708,"name":"hair loss","value":722},{"emotionType":"Sadness","emotionScore":0.373482577,"sentScore":-0.458037475,"name":"chin","value":619},{"emotionType":"Sadness","emotionScore":0.451988498,"sentScore":-0.56602167,"name":"jaw","value":588},{"emotionType":"Sadness","emotionScore":0.436883246,"sentScore":-0.577778807,"name":"tongue","value":540},{"emotionType":"Sadness","emotionScore":0.491793551,"sentScore":-0.614449675,"name":"back head","value":539},{"emotionType":"Sadness","emotionScore":0.458317481,"sentScore":-0.516283346,"name":"temple","value":518}]},{"name":12,"children":[{"emotionType":"Sadness","emotionScore":0.395440215,"sentScore":-0.51634273,"name":"thyroid","value":2986},{"emotionType":"Fear","emotionScore":0.423264267,"sentScore":-0.644900338,"name":"neck","value":2483},{"emotionType":"Fear","emotionScore":0.542152345,"sentScore":-0.759354885,"name":"throat","value":698}]},{"name":13,"children":[{"emotionType":"Sadness","emotionScore":0.43094401,"sentScore":-0.356461552,"name":"heart","value":814},{"emotionType":"Fear","emotionScore":0.523179736,"sentScore":-0.708831637,"name":"chest","value":711},{"emotionType":"Sadness","emotionScore":0.456552311,"sentScore":-0.51093566,"name":"back","value":608},{"emotionType":"Fear","emotionScore":0.428860854,"sentScore":-0.68169179,"name":"stomach","value":576}]},{"name":14,"children":[{"emotionType":"Fear","emotionScore":0.363588521,"sentScore":-0.538661644,"name":"hand","value":3120},{"emotionType":"Fear","emotionScore":0.430118509,"sentScore":-0.602583802,"name":"arm","value":2299},{"emotionType":"Fear","emotionScore":0.319009209,"sentScore":-0.514259125,"name":"finger","value":1890},{"emotionType":"Sadness","emotionScore":0.475404243,"sentScore":-0.619876161,"name":"shoulder","value":778}]},{"name":15,"children":[{"emotionType":"Sadness","emotionScore":0.422554896,"sentScore":-0.568405929,"name":"leg","value":2454},{"emotionType":"Sadness","emotionScore":0.414189762,"sentScore":-0.600454982,"name":"foot","value":1934},{"emotionType":"Sadness","emotionScore":0.375074989,"sentScore":-0.478526339,"name":"toe","value":564},{"emotionType":"Fear","emotionScore":0.469739747,"sentScore":-0.656404876,"name":"knee","value":509}]},{"name":36,"children":[{"emotionType":"Sadness","emotionScore":0.37211022,"sentScore":-0.488357095,"name":"skin","value":4292}]},{"name":111,"children":[{"emotionType":"Sadness","emotionScore":0.45222143,"sentScore":-0.491852966,"name":"eye","value":27985},{"emotionType":"Sadness","emotionScore":0.498292165,"sentScore":-0.537999331,"name":"left eye","value":4228},{"emotionType":"Sadness","emotionScore":0.411434947,"sentScore":-0.482274774,"name":"right eye","value":3958},{"emotionType":"Sadness","emotionScore":0.433637,"sentScore":-0.585322462,"name":"eyeball","value":999},{"emotionType":"Sadness","emotionScore":0.339852241,"sentScore":-0.382141687,"name":"pupil","value":852},{"emotionType":"Sadness","emotionScore":0.407780733,"sentScore":-0.465115818,"name":"cornea","value":647},{"emotionType":"Sadness","emotionScore":0.393064129,"sentScore":-0.428627257,"name":"corner eye","value":568},{"emotionType":"Sadness","emotionScore":0.36069326,"sentScore":-0.389034224,"name":"optic nerve","value":554}]},{"name":112,"children":[{"emotionType":"Sadness","emotionScore":0.414588145,"sentScore":-0.506559466,"name":"lid","value":2245},{"emotionType":"Sadness","emotionScore":0.408088621,"sentScore":-0.377291999,"name":"eyelash","value":2056},{"emotionType":"Sadness","emotionScore":0.460920226,"sentScore":-0.566351264,"name":"lower eyelid","value":1346},{"emotionType":"Sadness","emotionScore":0.384207139,"sentScore":-0.517442507,"name":"upper eyelid","value":1318},{"emotionType":"Sadness","emotionScore":0.444379415,"sentScore":-0.483532494,"name":"lower lid","value":1074},{"emotionType":"Sadness","emotionScore":0.495694642,"sentScore":-0.646128539,"name":"left eyelid","value":1024},{"emotionType":"Sadness","emotionScore":0.36279623,"sentScore":-0.596256263,"name":"right eyelid","value":908},{"emotionType":"Sadness","emotionScore":0.417459489,"sentScore":-0.400906445,"name":"lash","value":743},{"emotionType":"Sadness","emotionScore":0.645149614,"sentScore":-0.490944437,"name":"tear duct","value":704},{"emotionType":"Sadness","emotionScore":0.441286942,"sentScore":-0.434342978,"name":"brow","value":583},{"emotionType":"Sadness","emotionScore":0.389026917,"sentScore":-0.450489609,"name":"upper lid","value":545}]},{"emotionType":"Fear","emotionScore":0.347066822,"sentScore":-0.431709103,"name":"body","value":3954},{"emotionType":"Fear","emotionScore":0.402088512,"sentScore":-0.568720753,"name":"muscle","value":2297},{"emotionType":"Sadness","emotionScore":0.415741844,"sentScore":-0.595155776,"name":"nerve","value":1581},{"emotionType":"Sadness","emotionScore":0.516081093,"sentScore":-0.646464625,"name":"left side","value":943},{"emotionType":"Sadness","emotionScore":0.421864792,"sentScore":-0.543492502,"name":"right side","value":936}]},{"name":10,"children":[{"emotionType":"Joy","emotionScore":0.594418173,"sentScore":0.358626708,"name":"thanks","value":9839},{"emotionType":"Sadness","emotionScore":0.244928156,"sentScore":-0.240772195,"name":"question","value":4591},{"emotionType":"Joy","emotionScore":0.339451566,"sentScore":-0.018699227,"name":"help","value":4498},{"emotionType":"Sadness","emotionScore":0.423500936,"sentScore":-0.401315864,"name":"vision","value":3882},{"emotionType":"Joy","emotionScore":0.397092045,"sentScore":0.056636567,"name":"advice","value":2624},{"emotionType":"Sadness","emotionScore":0.440095635,"sentScore":-0.420799126,"name":"work","value":1817},{"emotionType":"Sadness","emotionScore":0.376975573,"sentScore":-0.387799095,"name":"light","value":1762},{"emotionType":"Joy","emotionScore":0.268343144,"sentScore":-0.032028749,"name":"reply","value":1253},{"emotionType":"Sadness","emotionScore":0.44727028,"sentScore":-0.39705635,"name":"makeup","value":1150},{"emotionType":"Sadness","emotionScore":0.429571215,"sentScore":-0.462682541,"name":"sleep","value":1071},{"emotionType":"Sadness","emotionScore":0.363781,"sentScore":-0.425343327,"name":"internet","value":979},{"emotionType":"Sadness","emotionScore":0.348814031,"sentScore":-0.276827963,"name":"food","value":902},{"emotionType":"Sadness","emotionScore":0.459444143,"sentScore":-0.547066966,"name":"weight","value":861},{"emotionType":"Sadness","emotionScore":0.297962429,"sentScore":-0.125526087,"name":"diet","value":830},{"emotionType":"Sadness","emotionScore":0.397439326,"sentScore":-0.374696966,"name":"computer","value":819},{"emotionType":"Sadness","emotionScore":0.329668934,"sentScore":-0.362528151,"name":"endo","value":743},{"emotionType":"Sadness","emotionScore":0.320561055,"sentScore":-0.193293346,"name":"exercise","value":740},{"emotionType":"Sadness","emotionScore":0.433326486,"sentScore":-0.389288706,"name":"rest","value":625},{"emotionType":"Sadness","emotionScore":0.321457579,"sentScore":-0.404346723,"name":"cure","value":575},{"emotionType":"Sadness","emotionScore":0.336739153,"sentScore":-0.395762929,"name":"contact lens","value":518},
+      {"emotionType":"Joy","emotionScore":0.36092724,"sentScore":-0.333732806,"name":"sun","value":501}]},
+      {"name":15,"children":[{"emotionType":"Sadness","emotionScore":0.499314597,"sentScore":-0.490296162,"name":"NA","value":760}, {"emotionType":"Sadness","emotionScore":0.376134736,"sentScore":-0.385168031,"name":"thing","value":9960},{"emotionType":"Sadness","emotionScore":0.380035368,"sentScore":-0.336990999,"name":"way","value":5578},{"emotionType":"Sadness","emotionScore":0.259970536,"sentScore":-0.181548003,"name":"answer","value":3502},{"emotionType":"Sadness","emotionScore":0.403055089,"sentScore":-0.486305,"name":"m","value":3499},{"emotionType":"Sadness","emotionScore":0.379319124,"sentScore":-0.287384218,"name":"lot","value":3452},{"emotionType":"Joy","emotionScore":0.75889958,"sentScore":0.197656261,"name":"good luck","value":3385},{"emotionType":"Sadness","emotionScore":0.260754234,"sentScore":-0.330273663,"name":"idea","value":3233},{"emotionType":"Sadness","emotionScore":0.370772707,"sentScore":-0.375760419,"name":"condition","value":3227},
+      {"emotionType":"Sadness","emotionScore":0.386588288,"sentScore":-0.413783726,"name":"area","value":3098},{"emotionType":"Sadness","emotionScore":0.423644205,"sentScore":-0.440761198,"name":"point","value":2913},{"emotionType":"Sadness","emotionScore":0.413359388,"sentScore":-0.438345845,"name":"bit","value":2902},{"emotionType":"Sadness","emotionScore":0.340586776,"sentScore":-0.35620003,"name":"case","value":2878},{"emotionType":"Sadness","emotionScore":0.295162053,"sentScore":-0.243494052,"name":"result","value":2706},{"emotionType":"Sadness","emotionScore":0.387334952,"sentScore":-0.357763234,"name":"life","value":2598},{"emotionType":"Sadness","emotionScore":0.393406237,"sentScore":-0.478174881,"name":"reason","value":2375},{"emotionType":"Joy","emotionScore":0.285068237,"sentScore":-0.127966971,"name":"post","value":2233},{"emotionType":"Sadness","emotionScore":0.486193201,"sentScore":-0.637103156,"name":"pressure","value":2141},{"emotionType":"Sadness","emotionScore":0.432041486,"sentScore":-0.507009895,"name":"side","value":2131},{"emotionType":"Sadness","emotionScore":0.42191105,"sentScore":-0.525201403,"name":"im","value":2127},{"emotionType":"Sadness","emotionScore":0.390047847,"sentScore":-0.470515585,"name":"fact","value":2030},{"emotionType":"Joy","emotionScore":0.208603442,"sentScore":0.090929748,"name":"suggestion","value":1968},{"emotionType":"Joy","emotionScore":0.187886787,"sentScore":0.020246082,"name":"information","value":1938},{"emotionType":"Sadness","emotionScore":0.432335476,"sentScore":-0.41918909,"name":"cause","value":1877},{"emotionType":"Sadness","emotionScore":0.337445939,"sentScore":-0.458424372,"name":"contact","value":1727},{"emotionType":"Sadness","emotionScore":0.382874494,"sentScore":-0.401752327,"name":"glass","value":1688},{"emotionType":"Sadness","emotionScore":0.3500275,"sentScore":-0.101729228,"name":"forum","value":1686},{"emotionType":"Sadness","emotionScore":0.347627061,"sentScore":-0.358389726,"name":"neuro","value":1609},{"emotionType":"Joy","emotionScore":0.406362541,"sentScore":0.000440832,"name":"response","value":1502},{"emotionType":"Sadness","emotionScore":0.255529744,"sentScore":-0.036638352,"name":"care","value":1461},{"emotionType":"Fear","emotionScore":0.439277825,"sentScore":-0.560635738,"name":"blood","value":1446},{"emotionType":"Sadness","emotionScore":0.259873701,"sentScore":-0.149268491,"name":"opinion","value":1396},{"emotionType":"Sadness","emotionScore":0.42621384,"sentScore":-0.394625273,"name":"age","value":1384},{"emotionType":"Sadness","emotionScore":0.339148279,"sentScore":-0.300888071,"name":"place","value":1383},{"emotionType":"Sadness","emotionScore":0.316365815,"sentScore":-0.25408843,"name":"experience","value":1376},{"emotionType":"Sadness","emotionScore":0.341938172,"sentScore":-0.072864781,"name":"thought","value":1366},{"emotionType":"Sadness","emotionScore":0.358091424,"sentScore":-0.494887579,"name":"spot","value":1343},{"emotionType":"Joy","emotionScore":0.385054611,"sentScore":-0.086791861,"name":"comment","value":1320},{"emotionType":"Sadness","emotionScore":0.34206894,"sentScore":-0.426385237,"name":"change","value":1287},{"emotionType":"Sadness","emotionScore":0.339788435,"sentScore":-0.284214224,"name":"mind","value":1230},{"emotionType":"Sadness","emotionScore":0.339925175,"sentScore":-0.370920114,"name":"water","value":1206},{"emotionType":"Sadness","emotionScore":0.444084218,"sentScore":-0.461428469,"name":"bed","value":1132},{"emotionType":"Joy","emotionScore":0.264990613,"sentScore":-0.32734295,"name":"difference","value":1118},{"emotionType":"Joy","emotionScore":0.228967033,"sentScore":0.075406985,"name":"info","value":1000},{"emotionType":"Sadness","emotionScore":0.370055367,"sentScore":-0.260271146,"name":"situation","value":979},{"emotionType":"Sadness","emotionScore":0.474461458,"sentScore":-0.466411459,"name":"feeling","value":967},{"emotionType":"Sadness","emotionScore":0.361255463,"sentScore":-0.316446889,"name":"stuff","value":956},{"emotionType":"Fear","emotionScore":0.371997379,"sentScore":-0.388619021,"name":"possibility","value":951},{"emotionType":"Sadness","emotionScore":0.35985223,"sentScore":-0.328007105,"name":"chance","value":948},{"emotionType":"Sadness","emotionScore":0.296782344,"sentScore":-0.078612072,"name":"site","value":944},{"emotionType":"Sadness","emotionScore":0.349248603,"sentScore":-0.238879592,"name":"product","value":925},{"emotionType":"Fear","emotionScore":0.378205233,"sentScore":-0.093436056,"name":"related discussion","value":922},{"emotionType":"Sadness","emotionScore":0.262156921,"sentScore":-0.28643007,"name":"range","value":912},{"emotionType":"Sadness","emotionScore":0.320303509,"sentScore":-0.280554876,"name":"level","value":908},{"emotionType":"Sadness","emotionScore":0.437095812,"sentScore":-0.499757374,"name":"second","value":890},{"emotionType":"Sadness","emotionScore":0.310087206,"sentScore":-0.248505828,"name":"picture","value":890},{"emotionType":"Sadness","emotionScore":0.177150456,"sentScore":-0.424696635,"name":"mg","value":883},{"emotionType":"Sadness","emotionScore":0.341516494,"sentScore":-0.632138029,"name":"none","value":877},{"emotionType":"Fear","emotionScore":0.440302361,"sentScore":-0.413413393,"name":"al","value":871},{"emotionType":"Sadness","emotionScore":0.442917362,"sentScore":-0.41566037,"name":"part","value":860},
+      {"emotionType":"Sadness","emotionScore":0.29039049,"sentScore":-0.266548851,"name":"name","value":860},{"emotionType":"Sadness","emotionScore":0.385547448,"sentScore":-0.360560257,"name":"word","value":860},{"emotionType":"Joy","emotionScore":0.379323509,"sentScore":0.055192604,"name":"advance","value":858},{"emotionType":"Sadness","emotionScore":0.433476596,"sentScore":-0.583118645,"name":"ive","value":851},{"emotionType":"Fear","emotionScore":0.298333385,"sentScore":-0.106941619,"name":"research","value":837},{"emotionType":"Sadness","emotionScore":0.34820965,"sentScore":-0.355533111,"name":"addition","value":836},{"emotionType":"Sadness","emotionScore":0.425681073,"sentScore":-0.425344677,"name":"hypo","value":833},{"emotionType":"Sadness","emotionScore":0.277457144,"sentScore":-0.282004958,"name":"sense","value":806},{"emotionType":"Sadness","emotionScore":0.348535581,"sentScore":-0.439852398,"name":"mirror","value":805},{"emotionType":"Joy","emotionScore":0.320286589,"sentScore":-0.087356522,"name":"solution","value":778},{"emotionType":"Sadness","emotionScore":0.385396235,"sentScore":-0.291709827,"name":"home","value":762},{"emotionType":"Sadness","emotionScore":0.36904582,"sentScore":-0.443284704,"name":"top","value":749},{"emotionType":"Sadness","emotionScore":0.252884445,"sentScore":-0.038575416,"name":"link","value":735},{"emotionType":"Sadness","emotionScore":0.375686783,"sentScore":-0.370164765,"name":"control","value":733},{"emotionType":"Sadness","emotionScore":0.346084725,"sentScore":-0.37973797,"name":"size","value":727},{"emotionType":"Sadness","emotionScore":0.351776695,"sentScore":-0.318305281,"name":"thats","value":719},{"emotionType":"Sadness","emotionScore":0.299209302,"sentScore":-0.194466809,"name":"second opinion","value":698},{"emotionType":"Sadness","emotionScore":0.329455594,"sentScore":-0.493974914,"name":"ent","value":690},{"emotionType":"Joy","emotionScore":0.558874262,"sentScore":0.052152207,"name":"luck","value":690},{"emotionType":"Sadness","emotionScore":0.39080528,"sentScore":-0.372220758,"name":"effect","value":685},{"emotionType":"Sadness","emotionScore":0.278746855,"sentScore":-0.326065885,"name":"improvement","value":684},{"emotionType":"Sadness","emotionScore":0.373884127,"sentScore":-0.387209259,"name":"bottom","value":675},{"emotionType":"Sadness","emotionScore":0.283098499,"sentScore":-0.290090033,"name":"option","value":670},{"emotionType":"Sadness","emotionScore":0.330504109,"sentScore":-0.380724098,"name":"example","value":654},{"emotionType":"Sadness","emotionScore":0.333551148,"sentScore":-0.213809774,"name":"order","value":642},{"emotionType":"Sadness","emotionScore":0.340320822,"sentScore":-0.426120487,"name":"pcp","value":639},{"emotionType":"Joy","emotionScore":0.37176885,"sentScore":-0.04033346,"name":"story","value":635},{"emotionType":"Sadness","emotionScore":0.275503312,"sentScore":-0.331269188,"name":"touch","value":634},{"emotionType":"Sadness","emotionScore":0.466116928,"sentScore":-0.495573038,"name":"half","value":625},{"emotionType":"Sadness","emotionScore":0.259603618,"sentScore":-0.369793663,"name":"sound","value":600},{"emotionType":"Sadness","emotionScore":0.414920933,"sentScore":-0.344932353,"name":"end","value":581},{"emotionType":"Sadness","emotionScore":0.424011712,"sentScore":-0.431490936,"name":"little bit","value":580},{"emotionType":"Sadness","emotionScore":0.405811443,"sentScore":-0.45750505,"name":"sign","value":576},{"emotionType":"Sadness","emotionScore":0.324677131,"sentScore":-0.245631901,"name":"look","value":574},{"emotionType":"Sadness","emotionScore":0.397989867,"sentScore":-0.357331346,"name":"line","value":572},{"emotionType":"Fear","emotionScore":0.423274175,"sentScore":-0.590113954,"name":"needle","value":571},{"emotionType":"Sadness","emotionScore":0.272543887,"sentScore":-0.493858644,"name":"contrast","value":565},{"emotionType":"Joy","emotionScore":0.387958518,"sentScore":0.125036628,"name":"input","value":562},{"emotionType":"Sadness","emotionScore":0.357014765,"sentScore":-0.345148731,"name":"house","value":557},{"emotionType":"Sadness","emotionScore":0.128973067,"sentScore":-0.113121605,"name":"regard","value":549},{"emotionType":"Joy","emotionScore":0.380981766,"sentScore":-0.142466715,"name":"health","value":534},{"emotionType":"Sadness","emotionScore":0.313905117,"sentScore":-0.252628211,"name":"hope","value":532},{"emotionType":"Sadness","emotionScore":0.309972745,"sentScore":-0.311793402,"name":"number","value":522},{"emotionType":"Sadness","emotionScore":0.427551778,"sentScore":-0.497770857,"name":"corner","value":509},{"emotionType":"Sadness","emotionScore":0.440817167,"sentScore":-0.495864379,"name":"rai","value":509},{"emotionType":"Sadness","emotionScore":0.295011135,"sentScore":-0.459246792,"name":"office","value":504},{"emotionType":"Sadness","emotionScore":0.386279774,"sentScore":-0.516060762,"name":"fluid","value":504},{"emotionType":"Joy","emotionScore":0.328017906,"sentScore":-0.331721465,"name":"baby shampoo","value":501}]},{"name":2,"children":[{"name":21,"children":[{"emotionType":"Sadness","emotionScore":0.461391653,"sentScore":-0.486518596,"name":"day","value":18604},{"emotionType":"Sadness","emotionScore":0.441096094,"sentScore":-0.479869522,"name":"week","value":13674},{"emotionType":"Sadness","emotionScore":0.487039541,"sentScore":-0.485058399,"name":"month","value":13632},{"emotionType":"Sadness","emotionScore":0.430229784,"sentScore":-0.508314753,"name":"minute","value":2302},{"emotionType":"Sadness","emotionScore":0.499991666,"sentScore":-0.499773609,"name":"yr","value":1284},{"emotionType":"Sadness","emotionScore":0.399151963,"sentScore":-0.511157513,"name":"period","value":602}]},{"name":22,"children":[{"emotionType":"Sadness","emotionScore":0.365405447,"sentScore":-0.460564558,"name":"night","value":4069},{"emotionType":"Sadness","emotionScore":0.38354597,"sentScore":-0.578532815,"name":"morning","value":3807},{"emotionType":"Sadness","emotionScore":0.41910518,"sentScore":-0.512725913,"name":"hour","value":3732}]},{"name":23,"children":[{"emotionType":"Sadness","emotionScore":0.397296892,"sentScore":-0.456009644,"name":"today","value":2556},{"emotionType":"Sadness","emotionScore":0.495155566,"sentScore":-0.529578788,"name":"last year","value":1300},{"emotionType":"Sadness","emotionScore":0.429386531,"sentScore":-0.516499134,"name":"yesterday","value":1279},{"emotionType":"Sadness","emotionScore":0.536719753,"sentScore":-0.554822716,"name":"last week","value":1205},{"emotionType":"Sadness","emotionScore":0.423698237,"sentScore":-0.588071845,"name":"next day","value":987},{"emotionType":"Sadness","emotionScore":0.419389479,"sentScore":-0.473486159,"name":"last night","value":901},{"emotionType":"Sadness","emotionScore":0.344982934,"sentScore":-0.353246616,"name":"april","value":651},{"emotionType":"Fear","emotionScore":0.298592835,"sentScore":-0.232761044,"name":"next week","value":612},{"emotionType":"Sadness","emotionScore":0.374111414,"sentScore":-0.42389747,"name":"march","value":606},{"emotionType":"Sadness","emotionScore":0.442237785,"sentScore":-0.481756949,"name":"last time","value":526},{"emotionType":"Sadness","emotionScore":0.361772958,"sentScore":-0.419786471,"name":"june","value":524},{"emotionType":"Sadness","emotionScore":0.491209083,"sentScore":-0.45432333,"name":"past year","value":515},{"emotionType":"Sadness","emotionScore":0.290718719,"sentScore":-0.142158462,"name":"tomorrow","value":506}]},{"emotionType":"Sadness","emotionScore":0.43440292,"sentScore":-0.411461753,"name":"time","value":16211},{"emotionType":"Sadness","emotionScore":0.452993258,"sentScore":-0.382995821,"name":"long time","value":1176},{"emotionType":"Sadness","emotionScore":0.381763985,"sentScore":-0.405625448,"name":"first time","value":1061},{"emotionType":"Sadness","emotionScore":0.373299145,"sentScore":-0.4495843,"name":"couple day","value":836},{"emotionType":"Sadness","emotionScore":0.469816129,"sentScore":-0.443427813,"name":"past","value":781},{"emotionType":"Sadness","emotionScore":0.535076425,"sentScore":-0.585727776,"name":"episode","value":769},{"emotionType":"Sadness","emotionScore":0.423161712,"sentScore":-0.481943668,"name":"moment","value":767},{"emotionType":"Sadness","emotionScore":0.389816056,"sentScore":-0.439726688,"name":"couple week","value":622},{"emotionType":"Sadness","emotionScore":0.415997415,"sentScore":-0.513670713,"name":"couple month","value":547}]},{"name":3,"children":[{"name":31,"children":[{"emotionType":"Sadness","emotionScore":0.674487486,"sentScore":-0.712019928,"name":"pain","value":7876},{"emotionType":"Sadness","emotionScore":0.430962354,"sentScore":-0.723665019,"name":"swelling","value":2718},{"emotionType":"Sadness","emotionScore":0.405591675,"sentScore":-0.558927422,"name":"redness","value":1793},{"emotionType":"Sadness","emotionScore":0.335906026,"sentScore":-0.441712056,"name":"bump","value":1586},{"emotionType":"Sadness","emotionScore":0.415654319,"sentScore":-0.565683814,"name":"blepharitis","value":1412},{"emotionType":"Sadness","emotionScore":0.380457685,"sentScore":-0.403457101,"name":"ptosis","value":1029},{"emotionType":"Sadness","emotionScore":0.415605718,"sentScore":-0.371575314,"name":"chalazion","value":885},{"emotionType":"Sadness","emotionScore":0.37981716,"sentScore":-0.608556148,"name":"lump","value":736}]},{"name":32,"children":[{"emotionType":"Sadness","emotionScore":0.508082969,"sentScore":-0.525263986,"name":"dry eye","value":2345},{"emotionType":"Sadness","emotionScore":0.433317591,"sentScore":-0.427505292,"name":"double vision","value":1662},{"emotionType":"Sadness","emotionScore":0.369307264,"sentScore":-0.4806998,"name":"stye","value":1192},{"emotionType":"Sadness","emotionScore":0.507020108,"sentScore":-0.602545602,"name":"eye problem","value":845},{"emotionType":"Sadness","emotionScore":0.654115668,"sentScore":-0.534675609,"name":"tear","value":775},
+      {"emotionType":"Sadness","emotionScore":0.663015609,"sentScore":-0.761894742,"name":"eye pain","value":621}]},{"name":33,"children":[{"emotionType":"Fear","emotionScore":0.570886694,"sentScore":-0.56132468,"name":"stress","value":2534},{"emotionType":"Fear","emotionScore":0.703500681,"sentScore":-0.606499937,"name":"anxiety","value":2319},{"emotionType":"Sadness","emotionScore":0.750229378,"sentScore":-0.664060212,"name":"depression","value":843}]},{"name":34,"children":[{"emotionType":"Sadness","emotionScore":0.547824207,"sentScore":-0.762646354,"name":"headache","value":3595},{"emotionType":"Sadness","emotionScore":0.555799587,"sentScore":-0.682747769,"name":"migraine","value":1544}]},{"name":35,"children":[{"emotionType":"Sadness","emotionScore":0.390439226,"sentScore":-0.478365075,"name":"hypothyroidism","value":845},{"emotionType":"Sadness","emotionScore":0.302583588,"sentScore":-0.448383485,"name":"myasthenia gravis","value":546}]},{"name":36,"children":[{"emotionType":"Sadness","emotionScore":0.364436839,"sentScore":-0.687384173,"name":"rash","value":1084},{"emotionType":"Sadness","emotionScore":0.455028277,"sentScore":-0.496811763,"name":"dry skin","value":751},{"emotionType":"Sadness","emotionScore":0.359501759,"sentScore":-0.679079333,"name":"pimple","value":636},{"emotionType":"Sadness","emotionScore":0.371831332,"sentScore":-0.596856054,"name":"eczema","value":624}]},{"name":37,"children":[{"emotionType":"Sadness","emotionScore":0.280419295,"sentScore":-0.498976837,"name":"allergy","value":3062},{"emotionType":"Fear","emotionScore":0.39571095,"sentScore":-0.580639846,"name":"infection","value":2013},{"emotionType":"Sadness","emotionScore":0.647935967,"sentScore":-0.750376059,"name":"allergic reaction","value":948},{"emotionType":"Sadness","emotionScore":0.614273661,"sentScore":-0.661775279,"name":"inflammation","value":881},{"emotionType":"Sadness","emotionScore":0.342496804,"sentScore":-0.614703001,"name":"lupus","value":863},{"emotionType":"Fear","emotionScore":0.353464317,"sentScore":-0.516271253,"name":"hiv","value":845},{"emotionType":"Fear","emotionScore":0.310829479,"sentScore":-0.573827449,"name":"antibody","value":837},{"emotionType":"Sadness","emotionScore":0.35676564,"sentScore":-0.668795438,"name":"lyme","value":834},{"emotionType":"Fear","emotionScore":0.347565422,"sentScore":-0.626790039,"name":"virus","value":723},{"emotionType":"Sadness","emotionScore":0.335698626,"sentScore":-0.636649089,"name":"herpes","value":687},{"emotionType":"Sadness","emotionScore":0.348027996,"sentScore":-0.506374103,"name":"immune system","value":562},{"emotionType":"Sadness","emotionScore":0.452194786,"sentScore":-0.727305276,"name":"autoimmune disease","value":551},{"emotionType":"Sadness","emotionScore":0.524582642,"sentScore":-0.512255252,"name":"cancer","value":528}]},{"name":38,"children":[{"emotionType":"Sadness","emotionScore":0.440831872,"sentScore":-0.531160803,"name":"stroke","value":680},{"emotionType":"Fear","emotionScore":0.767822942,"sentScore":-0.625639239,"name":"blood pressure","value":566}]},{"name":39,"children":[{"emotionType":"Sadness","emotionScore":0.472289884,"sentScore":-0.753429807,"name":"nausea","value":576}]},{"emotionType":"Sadness","emotionScore":0.484191688,"sentScore":-0.527140739,"name":"symptom","value":12584},{"emotionType":"Sadness","emotionScore":0.474301618,"sentScore":-0.745602441,"name":"numbness","value":1475},{"emotionType":"Sadness","emotionScore":0.27553986,"sentScore":-0.243967944,"name":"relief","value":1266},{"emotionType":"Sadness","emotionScore":0.415773679,"sentScore":-0.570096673,"name":"sensation","value":1254},{"emotionType":"Sadness","emotionScore":0.480210017,"sentScore":-0.693273764,"name":"fatigue","value":1239},{"emotionType":"Sadness","emotionScore":0.571254749,"sentScore":-0.634724311,"name":"weakness","value":1032},{"emotionType":"Sadness","emotionScore":0.350131848,"sentScore":-0.556749071,"name":"lesion","value":994},{"emotionType":"Sadness","emotionScore":0.389317164,"sentScore":-0.580283283,"name":"irritation","value":805},{"emotionType":"Sadness","emotionScore":0.436827975,"sentScore":-0.735750879,"name":"dizziness","value":785},{"emotionType":"Sadness","emotionScore":0.356003337,"sentScore":-0.548948121,"name":"tumor","value":686},{"emotionType":"Sadness","emotionScore":0.408492716,"sentScore":-0.655815598,"name":"spasm","value":661},{"emotionType":"Sadness","emotionScore":0.403635025,"sentScore":-0.657699321,"name":"fever","value":604},{"emotionType":"Sadness","emotionScore":0.386826057,"sentScore":-0.662112883,"name":"discomfort","value":592},{"emotionType":"Sadness","emotionScore":0.435544696,"sentScore":-0.528161065,"name":"dryness","value":589},{"emotionType":"Sadness","emotionScore":0.381428193,"sentScore":-0.586030526,"name":"diabetes","value":517}]},{"name":4,"children":[{"emotionType":"Sadness","emotionScore":0.344394158,"sentScore":-0.375397332,"name":"gp","value":1156},{"name":41,"children":[{"emotionType":"Fear","emotionScore":0.385495072,"sentScore":-0.350329678,"name":"eye doctor","value":2019},{"emotionType":"Sadness","emotionScore":0.310540551,"sentScore":-0.185732678,"name":"optometrist","value":972}]},{"name":42,"children":[{"emotionType":"Sadness","emotionScore":0.30908241,"sentScore":-0.442735269,"name":"neurologist","value":3761},{"emotionType":"Sadness","emotionScore":0.314321921,"sentScore":-0.023361671,"name":"dermatologist","value":1825},{"emotionType":"Sadness","emotionScore":0.282349637,"sentScore":-0.381310632,"name":"endocrinologist","value":535},{"emotionType":"Sadness","emotionScore":0.292846369,"sentScore":-0.43531581,"name":"allergist","value":526}]},{"name":43,"children":[{"emotionType":"Sadness","emotionScore":0.389520401,"sentScore":-0.3473244,"name":"family","value":1356},{"emotionType":"Sadness","emotionScore":0.365476825,"sentScore":-0.37427378,"name":"husband","value":1234},{"emotionType":"Sadness","emotionScore":0.34307278,"sentScore":-0.376760492,"name":"child","value":1157},{"emotionType":"Sadness","emotionScore":0.383138293,"sentScore":-0.38559014,"name":"son","value":1135},{"emotionType":"Sadness","emotionScore":0.389974551,"sentScore":-0.298220532,"name":"daughter","value":1080},{"emotionType":"Joy","emotionScore":0.32178373,"sentScore":-0.255885983,"name":"baby","value":775},{"emotionType":"Sadness","emotionScore":0.332410012,"sentScore":-0.355636993,"name":"kid","value":676},{"emotionType":"Sadness","emotionScore":0.376117413,"sentScore":-0.398415759,"name":"sister","value":543},{"emotionType":"Sadness","emotionScore":0.352377996,"sentScore":-0.251115279,"name":"wife","value":520}]},{"emotionType":"Sadness","emotionScore":0.416756184,"sentScore":-0.418496498,"name":"people","value":5487},{"emotionType":"Sadness","emotionScore":0.371420446,"sentScore":-0.270321848,"name":"friend","value":1551},{"emotionType":"Sadness","emotionScore":0.380937512,"sentScore":-0.375004752,"name":"patient","value":1541},{"emotionType":"Sadness","emotionScore":0.352400519,"sentScore":-0.330186683,"name":"person","value":1294},{"emotionType":"Fear","emotionScore":0.260560721,"sentScore":-0.199313721,"name":"specialist","value":1172},{"emotionType":"Sadness","emotionScore":0.311268968,"sentScore":-0.207760791,"name":"surgeon","value":963},{"emotionType":"Sadness","emotionScore":0.537551623,"sentScore":-0.398350271,"name":"old female","value":918},{"emotionType":"Sadness","emotionScore":0.303312669,"sentScore":-0.170103198,"name":"guy","value":840},{"emotionType":"Sadness","emotionScore":0.359565878,"sentScore":-0.419288477,"name":"woman","value":662},{"emotionType":"Sadness","emotionScore":0.483085549,"sentScore":-0.27666969,"name":"old male","value":658},{"emotionType":"Joy","emotionScore":0.632380922,"sentScore":0.129290174,"name":"god","value":628},{"emotionType":"Sadness","emotionScore":0.349979589,"sentScore":-0.299278661,"name":"nurse","value":569}]},{"name":5,"children":[{"emotionType":"Sadness","emotionScore":0.384036112,"sentScore":-0.421605615,"name":"medication","value":2502},{"emotionType":"Sadness","emotionScore":0.391148266,"sentScore":-0.400948855,"name":"med","value":1700},{"emotionType":"Sadness","emotionScore":0.529646425,"sentScore":-0.433061708,"name":"drop","value":1491},{"emotionType":"Sadness","emotionScore":0.322984994,"sentScore":-0.495954218,"name":"antibiotic","value":1256},{"emotionType":"Sadness","emotionScore":0.34548448,"sentScore":-0.502026923,"name":"steroid","value":1171},{"emotionType":"Sadness","emotionScore":0.489046652,"sentScore":-0.394595512,"name":"eye drop","value":1111},{"emotionType":"Sadness","emotionScore":0.294027043,"sentScore":-0.30161061,"name":"cream","value":1099},{"emotionType":"Joy","emotionScore":0.338703672,"sentScore":-0.183674131,"name":"warm compress","value":1022},{"emotionType":"Sadness","emotionScore":0.479617436,"sentScore":-0.417064703,"name":"drug","value":935},{"emotionType":"Sadness","emotionScore":0.31349063,"sentScore":-0.142711299,"name":"vitamin","value":924},{"emotionType":"Sadness","emotionScore":0.338603673,"sentScore":-0.434087611,"name":"medicine","value":899},{"emotionType":"Sadness","emotionScore":0.418776521,"sentScore":-0.453117084,"name":"pill","value":676},{"emotionType":"Sadness","emotionScore":0.315938397,"sentScore":-0.387676782,"name":"prescription","value":662},{"emotionType":"Sadness","emotionScore":0.343202742,"sentScore":-0.316781521,"name":"hormone","value":616},{"emotionType":"Sadness","emotionScore":0.358150398,"sentScore":-0.325612082,"name":"ointment","value":583},{"emotionType":"Sadness","emotionScore":0.382327141,"sentScore":-0.261960151,"name":"restasis","value":581},{"emotionType":"Sadness","emotionScore":0.327267785,"sentScore":-0.421206425,"name":"hot compress","value":544},{"emotionType":"Sadness","emotionScore":0.441969471,"sentScore":-0.562794886,"name":"prednisone","value":507},{"emotionType":"Sadness","emotionScore":0.501846836,"sentScore":-0.533401754,"name":"patch","value":501}]},{"name":6,"children":[{"name":63,"children":[{"emotionType":"Fear","emotionScore":0.295962045,"sentScore":-0.34501721,"name":"test","value":5068},{"emotionType":"Sadness","emotionScore":0.285821621,"sentScore":-0.463370867,"name":"mri","value":3761},{"emotionType":"Fear","emotionScore":0.46296999,"sentScore":-0.489359741,"name":"blood test","value":1955},{"emotionType":"Sadness","emotionScore":0.293252267,"sentScore":-0.30124035,"name":"tsh","value":1928},{"emotionType":"Fear","emotionScore":0.182207671,"sentScore":-0.418189996,"name":"ct scan","value":1125},{"emotionType":"Sadness","emotionScore":0.27008743,"sentScore":-0.170961551,"name":"lab","value":1037},{"emotionType":"Fear","emotionScore":0.439134248,"sentScore":-0.521394027,"name":"blood work","value":912},{"emotionType":"Sadness","emotionScore":0.29550784,"sentScore":-0.228651107,"name":"t4","value":840},{"emotionType":"Sadness","emotionScore":0.257770134,"sentScore":-0.174841098,"name":"testing","value":805},{"emotionType":"Sadness","emotionScore":0.214012329,"sentScore":0.044183455,"name":"free t4","value":765},{"emotionType":"Fear","emotionScore":0.296562524,"sentScore":-0.359756547,"name":"emg","value":752},{"emotionType":"Sadness","emotionScore":0.30915623,"sentScore":-0.254285224,"name":"t3","value":736},{"emotionType":"Sadness","emotionScore":0.221678071,"sentScore":0.013050151,"name":"free t3","value":720},{"emotionType":"Sadness","emotionScore":0.500853811,"sentScore":-0.648721944,"name":"thyroid problem","value":715},{"emotionType":"Sadness","emotionScore":0.307143363,"sentScore":-0.16919781,"name":"b12","value":526},{"emotionType":"Fear","emotionScore":0.232304289,"sentScore":-0.197857355,"name":"test result","value":515}]},{"emotionType":"Sadness","emotionScore":0.480122724,"sentScore":-0.405035929,"name":"surgery","value":4261},{"emotionType":"Sadness","emotionScore":0.35140372,"sentScore":-0.279104146,"name":"botox","value":796},{"emotionType":"Sadness","emotionScore":0.338118686,"sentScore":-0.202808525,"name":"procedure","value":714}]},{"name":7,"children":[{"emotionType":"Sadness","emotionScore":0.539725359,"sentScore":-0.535881636,"name":"problem","value":11946},{"emotionType":"Sadness","emotionScore":0.442987591,"sentScore":-0.456478215,"name":"issue","value":2858},{"emotionType":"Sadness","emotionScore":0.447706716,"sentScore":-0.522174192,"name":"disease","value":1589},{"emotionType":"Sadness","emotionScore":0.469691334,"sentScore":-0.696785346,"name":"trouble","value":998},{"emotionType":"Sadness","emotionScore":0.532797218,"sentScore":-0.512309865,"name":"damage","value":862},{"emotionType":"Fear","emotionScore":0.340529189,"sentScore":-0.338644919,"name":"concern","value":848},{"emotionType":"Fear","emotionScore":0.406518625,"sentScore":-0.407258686,"name":"risk","value":815},{"emotionType":"Sadness","emotionScore":0.379806041,"sentScore":-0.361943672,"name":"reaction","value":807},{"emotionType":"Sadness","emotionScore":0.389192539,"sentScore":-0.429634803,"name":"side effect","value":725},{"emotionType":"Sadness","emotionScore":0.472052038,"sentScore":-0.654733379,"name":"difficulty","value":604}]},{"name":8,"children":[{"emotionType":"Sadness","emotionScore":0.226373776,"sentScore":-0.196873378,"name":"appointment","value":1959},{"emotionType":"Sadness","emotionScore":0.496925959,"sentScore":-0.536852013,"name":"hospital","value":1314},{"emotionType":"Sadness","emotionScore":0.282152117,"sentScore":-0.382198656,"name":"insurance","value":957},{"emotionType":"Sadness","emotionScore":0.407067576,"sentScore":-0.518536646,"name":"er","value":734},{"emotionType":"Sadness","emotionScore":0.416227824,"sentScore":-0.451763695,"name":"job","value":597},{"emotionType":"Sadness","emotionScore":0.262828907,"sentScore":0.035396791,"name":"website","value":549},{"emotionType":"Sadness","emotionScore":0.425697369,"sentScore":-0.434346318,"name":"school","value":547},{"emotionType":"Sadness","emotionScore":0.335868105,"sentScore":-0.293866139,"name":"money","value":503}]}]
+    };
+
+    function getMaxMinEmotions(data) {
+      return data.children
+        .map(group => {
+          return group.children.map(subgroup => {
+            if(subgroup.children) return subgroup.children;
+            else return [subgroup]
+            }).flat();
+        })
+        .flat()
+        .reduce((acc, cur) => {
+          acc[cur.emotionType].max = Math.max(cur.emotionScore, acc[cur.emotionType].max);
+          acc[cur.emotionType].min = Math.min(cur.emotionScore, acc[cur.emotionType].min);
+          return acc;
+        }, {
+          Sadness: { max: 0, min: 1 },
+          Fear: { max: 0, min: 1 },
+          Disgust: { max: 0, min: 1 },
+          Anger: { max: 0, min: 1 },
+          Joy: { max: 0, min: 1 }
+        });
+    }
+    const normalizationMaxMins = getMaxMinEmotions(data);
+
+    function mapNames(dataObject) {
+      data.children.forEach(group => {
+        group.name = getGroupName(group.name);
+        group.children.forEach(subgroup => {
+          if (subgroup.children) subgroup.name = getSubgroupName(subgroup.name);
+          if (subgroup.children && subgroup.name) subgroup.name = subgroup.name.toUpperCase();
+        });
+      });
+    }
+
+    function getGroupName(code) {
+      return "";
+    }
+    function getSubgroupName(code) {
+      return "";
+    }
+
+    function getGroupName(code) {
+      if (code === 1) return "Body Parts";
+      else if (code === 2) return "Time";
+      else if (code === 3) return "Medical Signs, Symptoms & Treatments";
+      else if (code === 4) return "People";
+      else if (code === 5) return "Medication & Treatment";
+      else if (code === 6) return "Procedures";
+      else if (code === 7) return "Complications";
+      else if (code === 8) return "Administration";
+      else if (code === 10) return "Other";
+      else if (code === 15) return "Rejected Keywords";
+    }
+
+    function getSubgroupName(code) {
+      if (code === 11) return "Head";
+      else if (code === 111) return "Eye";
+      else if (code === 112) return "Oculoplastics";
+      else if (code === 12) return "Neck";
+      else if (code === 14) return "Upper Limbs";
+      else if (code === 13) return "Thorax";
+      else if (code === 15) return "Lower Limbs";
+
+      else if (code === 21) return "Length";
+      else if (code === 22) return "Time of Day";
+      else if (code === 23) return "Moment";
+
+      else if (code === 31) return "Oculoplastics";
+      else if (code === 32) return "Eye";
+      else if (code === 33) return "Psychiatry";
+      else if (code === 34) return "Neurology";
+      else if (code === 35) return "Endocrinology";
+      else if (code === 36) return "Integumentary";
+      else if (code === 37) return "Immunology";
+      else if (code === 38) return "Cardiology";
+      else if (code === 39) return "Gastroenterology";
+
+      else if (code === 41) return "Eye Care Doctor";
+      else if (code === 42) return "Non-ocular Medical Specialist";
+      else if (code === 43) return "Family Member";
+
+      else if (code === 63) return "Tests & Results";
+
+    }
+
+    mapNames(data);
+
+    const pack = data =>
+      d3
+        .pack()
+        .size([width, height])
+        .padding(4)(
+        d3
+          .hierarchy(data)
+          .sum(d => d.value)
+          .sort((a, b) => b.value - a.value)
+      );
+
+    const width = 1932;
+    const height = 1932;
+
+    const format = d3.format(",d");
+
+    const color = d3
+      .scaleLinear()
+      .domain([0, 5])
+      .range(["hsl(203,20%,90%)", "hsl(300,5%,40%)"])
+      .interpolate(d3.interpolateHcl);
+
+    const root = pack(data);
+    let focus = root;
+    let view;
+
+    const svg = d3
+      .select("#container")
+      .append("svg:svg")
+      .attr("viewBox", `-${width} -${height / 2} ${width * 2} ${height * 2}`)
+      .style("display", "block")
+      .style("margin", "0 0px")
+      .style("background", "white")
+      .style("cursor", "pointer")
+      .on("click", () => zoom(root));
+
+    const node = svg
+      .append("g")
+      .selectAll("circle")
+      .data(root.descendants().slice(1))
+      .enter()
+      .append("circle")
+      .attr("fill", d => {
+        if(d.children) {
+          return color(d.depth);
+        } else {
+          const hslValues = getHSLKeyword(d.data.emotionType, d.data.emotionScore, 23, 68);
+          return `hsl(${hslValues.hue}, ${hslValues.saturation}%, ${hslValues.lightness}%)`;
+        }
+      })
+      .attr("pointer-events", d => (!d.children ? "none" : null))
+      .on("mouseover", function() {
+        d3.select(this).attr("stroke", "#000");
+      })
+      .on("mouseout", function() {
+        d3.select(this).attr("stroke", null);
+      })
+      .on("click", d => focus !== d && (zoom(d), d3.event.stopPropagation()));
+
+    const label = svg
+      .append("g")
+      .attr("pointer-events", "none")
+      .attr("text-anchor", "middle")
+      .selectAll("text")
+      .data(root.descendants())
+      .enter()
+      .append("text")
+      .style("fill-opacity", d => (d.parent === root ? 1 : 0))
+      .style("display", d => (d.parent === root ? "inline" : "none")) 
+      .style('fill', d => {
+        if(!d.children) {
+          const hslValues = getHSLKeyword(d.data.emotionType, d.data.emotionScore, 23, 68);
+          if (hslValues.hue === 260 && hslValues.lightness < 64.9) return '#d5d5de';
+        }
+        else return "black";
+        })
+      .style("font", d => {
+        return `${Math.min(Math.max(30, d.value/100), 45)}px Trebuchet MS, sans-serif`})
+      .text(d => {
+        if (d.data.name === "blood pressure") return "BP"
+        else if (d.data.name === "myasthenia gravis") return "MG"
+        else if (d.data.name === "hypothyroidism") return "HT"
+        else if (d.data.name === "couple week") return "CW"
+        else if (d.data.name === "appointment") return "APPT"
+        else if (d.data.name === "eye doctor") return "ED"
+    
+        return d.data.name
+      });
+
+    zoomTo([root.x, root.y, root.r * 2]);
+
+    function getHSLKeyword(emotionType, emotionScore, a, b) {
+      let hue;
+      let saturation = 77;
+      let lightness = normalizeScoreHSL(emotionType, emotionScore, a, b);
+      if (emotionType === "Sadness") hue = 203; 
+      else if (emotionType === "Fear") hue = 260; 
+      else if (emotionType === "Anger") hue = 12; 
+      else if (emotionType === "Joy") hue = 43;
+      else if (emotionType === "Disgust") hue = 173;
+      return {hue, saturation, lightness};
+    };
+
+    function normalizeScoreHSL(emotionType, emotionScore, a, b) {
+      if (normalizationMaxMins[emotionType].max === normalizationMaxMins[emotionType].min) return 30;
+      const res = ((b - a) * (emotionScore - normalizationMaxMins[emotionType].min) / (normalizationMaxMins[emotionType].max - normalizationMaxMins[emotionType].min)) + a;
+      return 100 - res;
+    };
+
+    function zoomTo(v) {
+      const k = width / v[2];
+
+      view = v;
+
+      label.attr(
+        "transform",
+        d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`
+      );
+      node.attr(
+        "transform",
+        d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`
+      );
+      node.attr("r", d => d.r * k);
+    }
+
+    function zoom(d) {
+      const focus0 = focus;
+
+      focus = d;
+
+      const transition = svg
+        .transition()
+        .duration(d3.event.altKey ? 7500 : 750)
+        .tween("zoom", d => {
+          const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
+          return t => zoomTo(i(t));
+        });
+
+      label
+        .filter(function(d) {
+          return d.parent === focus || this.style.display === "inline";
+        })
+        .transition(transition)
+        .style("fill-opacity", d => (d.parent === focus ? 1 : 0))
+        .on("start", function(d) {
+          if (d.parent === focus) this.style.display = "inline";
+        })
+        .on("end", function(d) {
+          if (d.parent !== focus) this.style.display = "none";
+        });
+    }
+
+    const chart = svg.node();
+    
+  </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
