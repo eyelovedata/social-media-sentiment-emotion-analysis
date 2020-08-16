@@ -1,30 +1,49 @@
-# Sentiment and Emotion Analysis with IBM Watson Natural Language Understanding
-Using IBM Watson Natural Language Understanding to perform sentiment and emotion analysis 
+# Data Mining for Sentiment and Emotion Analysis
+A method for sentiment and emotion analysis in medicine using IBM Watson's Natural Language Understanding and MedHelp data source to help guide clinicians to better understand patients' perspectives. Scripts can be adapted to other social media platforms.
 
-Currently contains an example script illustrating how to use IBM Watson's Natural Language Understanding to perform sentiment and emotion analysis. This example script assumes that the items to be analyzed are "posts," e.g. free text posts made by users on some platform. 
-Data are assumed to be stored in a sqlite database. 
+## Summary
+Scripts allow full extraction of patient-doctor conversations on MedHelp into an SQLite relational database. Data is fed into IBM Watson Natural Language Understanding API, which returns sentiment scores (positive, neutral, negative) and emotions likeliness (anger, disgust, fear, joy, sadness) for every text entity given, along with associated sentiment scores and emotions likeliness for important keywords detected by Watsons' algorithms. Keywords are linguistically processed to group keywords with the same clinical relevance. Basic data aggregation is performed on the dataset. Instructions are given within each script to guide users when needed.
 
-Script uses the API to feed the posts to the IBM Watson NLU service, obtains sentiment and emotion scores, and stores the resulting scores back into the database in new tables. 
+**NOTE**: the MedHelp data mining tool is designed to scrape the platform as of January 1st, 2020. Changes to the platform can result in necessary modifications to the code.
 
-You will need your own API Key for access to the service 
+A chart for the oculoplastics field using this project can be found here: https://oculoplastics-keywords.herokuapp.com/
 
-Requires: 
-import json
+## Installation
+**NOTE**: Python 3.6 or higher is required.
+```bash
+# clone the repo
+$ git clone git@github.com:eyelovedata/sentiment-emotion-analysis.git
 
-import sqlite3
+# change the working directory to sentiment-emotion-analysis
+$ cd sentiment-emotion-analysis
 
-import sys
+# install python3 and python3-pip if they are not installed
 
-import logging
+# install the requirements
+$ python3 -m pip install -r requirements.txt
+```
 
+## Scripts
+### 1. Thread extraction 
+**medhelp-thread-extraction.py**
 
-import requests
+**NOTE**: requires an SQLite database to be setup prior to running the script
 
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+Prompts the user to enter a search term, extracts relevant thread information (url, title, forum, html) for the given search term and inserts the results into the database. Errors are logged when the script completes.
 
-from ibm_watson import NaturalLanguageUnderstandingV1
+### 2. Post and user extraction
+**medhelp-post-user-extraction.py**
 
-from ibm_watson.natural_language_understanding_v1 import (EmotionOptions,
-                                                          Features,
-                                                          KeywordsOptions,
-                                                          SentimentOptions)
+For each previously extracted thread, the content of each user (username, doctor, profile url, profile html, age, sex, member since, location) and post (users_id, threads_id, order, content, date) are extracted and inserted into the database. Errors are logged when the script completes.
+
+### 3. IBM Watson NLU sentiment/emotion analysis
+**ibm-watson-nlu-posts-keywords-sentiment-emotion-extraction.py**
+
+**NOTE**: Requires an API-key to access the service
+
+Assumes that the SQLite database contains a posts table with the following headers: content, label, sent_score, anger_score, sadness_score, fear_score, disgust_score, and joy_score. Feeds the content of each post to IBM Watson NLU sentiment and emotion analysis, which returns sentiment scores and emotions likeliness for each whole post and important keywords within each post, and inserts the results into the database.
+
+### 4. Keyword processing and aggregation
+**keyword-processing-aggregating.ipynb**
+
+Processes the keywords (lowercasing, punctuation removal, stop word deletion, lemmatization) into cleaned keywords, does basic aggregation of the processed keywords (frequency, mean, scores, standard deviation) and outputs the results to a csv. Helps the user visualize their data.
