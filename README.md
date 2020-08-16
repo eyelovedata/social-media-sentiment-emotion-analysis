@@ -39,7 +39,7 @@ For each previously extracted thread, the content of each user (username, doctor
 ### 3. IBM Watson NLU sentiment/emotion analysis
 **ibm-watson-nlu-posts-keywords-sentiment-emotion-extraction.py**
 
-**NOTE**: Requires an API-key to access the service
+**NOTE**: requires an API-key to access the service
 
 Assumes that the SQLite database contains a posts table with the following headers: content, label, sent_score, anger_score, sadness_score, fear_score, disgust_score, and joy_score. Feeds the content of each post to IBM Watson NLU sentiment and emotion analysis, which returns sentiment scores and emotions likeliness for each whole post and important keywords within each post, and inserts the results into the database.
 
