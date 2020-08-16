@@ -4,9 +4,9 @@ A method for sentiment and emotion analysis in medicine using IBM Watson's Natur
 ## Summary
 Scripts allow full extraction of patient-doctor conversations on MedHelp into an SQLite relational database. Data is fed into IBM Watson Natural Language Understanding API, which returns sentiment scores (positive, neutral, negative) and emotions likeliness (anger, disgust, fear, joy, sadness) for every text entity given, along with associated sentiment scores and emotions likeliness for important keywords detected by Watsons' algorithms. Keywords are linguistically processed to group keywords with the same clinical relevance. Basic data aggregation is performed on the dataset. Instructions are given within each script to guide users when needed.
 
-**NOTE**: the MedHelp data mining tool is designed to scrape the platform as of January 1st, 2020. Changes to the platform can result in necessary modifications to the code.
+**NOTE**: the MedHelp data mining tool is designed to scrape the platform as of January 1<sup>st</sup>, 2020. Changes to the platform can result in necessary modifications to the code.
 
-A chart for the oculoplastics field using this project can be found here: https://oculoplastics-keywords.herokuapp.com/
+A chart for the oculoplastics field using this project can be found [here](https://oculoplastics-keywords.herokuapp.com/) (oculoplastics-keywords-chart.html).
 
 ## Installation
 **NOTE**: Python 3.6 or higher is required.
