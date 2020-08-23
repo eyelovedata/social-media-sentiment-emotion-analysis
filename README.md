@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3989936.svg)](https://doi.org/10.5281/zenodo.3989936)
+
 # Data Mining for Sentiment and Emotion Analysis
 A method for sentiment and emotion analysis in medicine using IBM Watson's Natural Language Understanding and MedHelp data source to help guide clinicians to better understand patients' perspectives. Scripts can be adapted to other social media platforms.
 
