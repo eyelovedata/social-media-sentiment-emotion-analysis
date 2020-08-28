@@ -4,7 +4,7 @@
 A method for sentiment and emotion analysis in medicine using IBM Watson's Natural Language Understanding and MedHelp data source to help guide clinicians to better understand patients' perspectives. Scripts can be adapted to other social media platforms.
 
 ## Summary
-Scripts allow full extraction of patient-doctor conversations on MedHelp into an SQLite relational database. Data is fed into IBM Watson Natural Language Understanding API, which returns sentiment scores (positive, neutral, negative) and emotions likeliness (anger, disgust, fear, joy, sadness) for every text entity given, along with associated sentiment scores and emotions likeliness for important keywords detected by Watsons' algorithms. Keywords are linguistically processed to group keywords with the same clinical relevance. Basic data aggregation is performed on the dataset. Instructions are given within each script to guide users when needed.
+Scripts allow full extraction of patient-doctor conversations on MedHelp into an SQLite relational database. Data is fed into IBM Watson Natural Language Understanding API, which returns sentiment scores (positive, neutral, negative) and emotions likelihood (anger, disgust, fear, joy, sadness) for every text entity given, along with associated sentiment scores and emotions likelihood for important keywords detected by Watsons' algorithms. Keywords are linguistically processed to group keywords with the same clinical relevance. Basic data aggregation is performed on the dataset. Instructions are given within each script to guide users when needed.
 
 **NOTE**: the MedHelp data mining tool is designed to scrape the platform as of January 1<sup>st</sup>, 2020. Changes to the platform can result in necessary modifications to the code.
 
@@ -14,10 +14,10 @@ A chart for the oculoplastics field using this project can be found [here](https
 **NOTE**: Python 3.6 or higher is required.
 ```bash
 # clone the repo
-$ git clone git@github.com:eyelovedata/sentiment-emotion-analysis.git
+$ git clone git@github.com:eyelovedata/social-media-sentiment-emotion-analysis.git
 
-# change the working directory to sentiment-emotion-analysis
-$ cd sentiment-emotion-analysis
+# change the working directory to social-media-sentiment-emotion-analysis
+$ cd social-media-sentiment-emotion-analysis
 
 # install python3 and python3-pip if they are not installed
 
@@ -43,7 +43,7 @@ For each previously extracted thread, the content of each user (username, doctor
 
 **NOTE**: requires an API-key to access the service
 
-Assumes that the SQLite database contains a posts table with the following headers: content, label, sent_score, anger_score, sadness_score, fear_score, disgust_score, and joy_score. Feeds the content of each post to IBM Watson NLU sentiment and emotion analysis, which returns sentiment scores and emotions likeliness for each whole post and important keywords within each post, and inserts the results into the database.
+Assumes that the SQLite database contains a posts table with the following headers: content, label, sent_score, anger_score, sadness_score, fear_score, disgust_score, and joy_score. Feeds the content of each post to IBM Watson NLU sentiment and emotion analysis, which returns sentiment scores and emotions likelihood for each whole post and important keywords within each post, and inserts the results into the database.
 
 ### 4. Keyword processing and aggregation
 **keyword-processing-aggregating.ipynb**
